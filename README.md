@@ -153,3 +153,6 @@
 
 ### 画面遷移図
 Figma：<https://www.figma.com/design/OvpXl3qCP8p9pt9NW8t5fR/%E3%83%AF%E3%82%A4%E3%83%B3%E3%83%9A%E3%82%A2%E3%83%AA%E3%83%B3%E3%82%B0_%E7%94%BB%E9%9D%A2%E9%81%B7%E7%A7%BB%E5%9B%B3?node-id=0-1&t=hpmY9MHJjgCkNKjF-1>
+
+### ER図
+https://gyazo.com/af398eb7004ad7bbd63c17d71f3c345d
