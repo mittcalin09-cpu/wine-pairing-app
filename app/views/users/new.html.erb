@@ -1,0 +1,29 @@
+<div style="text-align: center; margin-top: 50px;">
+  <h2>ユーザー登録</h2>
+
+  <%= form_with model: @user do |f| %>
+    <div style="margin-bottom: 15px;">
+      <%= f.label :name, '名前' %><br>
+      <%= f.text_field :name %>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <%= f.label :email, 'メールアドレス' %><br>
+      <%= f.email_field :email %>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <%= f.label :password, 'パスワード' %><br>
+      <%= f.password_field :password %>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <%= f.label :password_confirmation, 'パスワード確認' %><br>
+      <%= f.password_field :password_confirmation %>
+    </div>
+
+    <div>
+      <%= f.submit '登録する' %>
+    </div>
+  <% end %>
+</div>
