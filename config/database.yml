@@ -80,6 +80,4 @@ test:
 #
 production:
   <<: *default
-  database: wine_pairing_app_production
-  username: wine_pairing_app
-  password: <%= ENV["WINE_PAIRING_APP_DATABASE_PASSWORD"] %>
+  url: <%= ENV["DATABASE_URL"] %>
