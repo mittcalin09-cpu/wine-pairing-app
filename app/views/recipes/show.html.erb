@@ -1,2 +1,33 @@
-<h1>Recipes#show</h1>
-<p>Find me in app/views/recipes/show.html.erb</p>
+<div style="text-align: center; margin-top: 50px;">
+  <h2><%= @recipe.title %></h2>
+
+  <% if @recipe.image.attached? %>
+    <div style="margin: 20px 0;">
+      <%= image_tag @recipe.image, style: "max-width: 400px; border-radius: 8px;" %>
+    </div>
+  <% end %>
+
+  <div style="margin: 20px auto; max-width: 600px; text-align: left; background-color: #f8f9fa; padding: 20px; border-radius: 8px;">
+    <p><strong>説明:</strong><br>
+      <%= @recipe.description %>
+    </p>
+
+    <p><strong>おすすめのワイン:</strong><br>
+      種類: <%= {'red' => '赤ワイン', 'white' => '白ワイン', 'rose' => 'ロゼワイン'}[@recipe.wine_type] %><br>
+      重さ: <%= {'light' => 'ライトボディ', 'medium' => 'ミディアムボディ', 'full' => 'フルボディ'}[@recipe.wine_body] %>
+    </p>
+
+    <p><strong>使われている食材:</strong><br>
+      <% @recipe.tags.each do |tag| %>
+        <span style="display: inline-block; background-color: #e2e3e5; padding: 5px 10px; border-radius: 15px; margin-right: 5px; font-size: 14px;">
+          <%= tag.name %>
+        </span>
+      <% end %>
+    </p>
+  </div>
+
+  <div style="margin-top: 30px;">
+    <%= link_to '検索結果に戻る', "javascript:history.back()" %> | 
+    <%= link_to 'トップページ', root_path %>
+  </div>
+</div>
