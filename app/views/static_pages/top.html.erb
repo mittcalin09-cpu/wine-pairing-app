@@ -1,4 +1,27 @@
 <div style="text-align: center; margin-top: 50px;">
   <h1>ワインペアリングアプリ 🍷</h1>
-  <p>ここに検索フォームが入ります（※後日実装）</p>
+
+  <div style="margin-top: 30px; padding: 20px; background-color: #f8f9fa; border-radius: 8px; display: inline-block;">
+    <h3>条件を選んでレシピを探す</h3>
+    <%= form_with url: recipes_path, method: :get do |f| %>
+      <div style="margin-bottom: 15px;">
+        <%= f.label :wine_type, 'ワインの種類:' %>
+        <%= f.select :wine_type, [['赤ワイン', 'red'], ['白ワイン', 'white'], ['ロゼワイン', 'rose']], include_blank: 'すべて' %>
+      </div>
+
+      <div style="margin-bottom: 15px;">
+        <%= f.label :wine_body, 'ワインの重さ:' %>
+        <%= f.select :wine_body, [['ライトボディ', 'light'], ['ミディアムボディ', 'medium'], ['フルボディ', 'full']], include_blank: 'すべて' %>
+      </div>
+
+      <div style="margin-bottom: 15px;">
+        <%= f.label :tag_id, 'メインの食材:' %>
+        <%= f.collection_select :tag_id, Tag.all, :id, :name, include_blank: 'すべて' %>
+      </div>
+
+      <div>
+        <%= f.submit '検索する' %>
+      </div>
+    <% end %>
+  </div>
 </div>

@@ -1,0 +1,19 @@
+<div style="text-align: center; margin-top: 50px;">
+  <h2>検索結果</h2>
+
+  <% if @recipes.present? %>
+    <ul style="list-style: none; padding: 0;">
+      <% @recipes.each do |recipe| %>
+        <li style="margin-bottom: 10px; font-size: 18px;">
+          <%= link_to recipe.title, recipe_path(recipe) %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>条件に一致するレシピが見つかりませんでした。</p>
+  <% end %>
+
+  <div style="margin-top: 20px;">
+    <%= link_to 'トップページに戻る', root_path %>
+  </div>
+</div>

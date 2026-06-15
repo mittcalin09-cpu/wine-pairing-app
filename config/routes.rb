@@ -1,14 +1,13 @@
 Rails.application.routes.draw do
-  get "profiles/edit"
-  get "profiles/update"
   root 'static_pages#top'
   resources :users, only: %i[new create]
-
+  
   get 'login', to: 'user_sessions#new', as: :login
   post 'login', to: 'user_sessions#create'
   delete 'logout', to: 'user_sessions#destroy', as: :logout
-  
   resource :profile, only: %i[edit update]
+
+  resources :recipes, only: %i[index show]
 
   get "static_pages/top"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
