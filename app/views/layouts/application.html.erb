@@ -18,6 +18,22 @@
   </head>
 
   <body>
+  <header style="text-align: right; padding: 20px; background-color: #f8f9fa;">
+  <% if logged_in? %>
+    <span>ユーザー: <%= current_user.name %></span> |
+    <%= link_to 'ログアウト', logout_path, data: { turbo_method: :delete } %>
+  <% else %>
+    <%= link_to 'ユーザー登録', new_user_path %> |
+    <%= link_to 'ログイン', login_path %>
+  <% end %>
+</header>
+
+<% if flash[:notice] %>
+  <div style="color: green; text-align: center; margin-top: 10px;"><%= flash[:notice] %></div>
+<% end %>
+<% if flash[:alert] %>
+  <div style="color: red; text-align: center; margin-top: 10px;"><%= flash[:alert] %></div>
+<% end %>
     <%= yield %>
   </body>
 </html>
