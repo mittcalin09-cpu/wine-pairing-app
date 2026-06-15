@@ -1,0 +1,29 @@
+<div style="text-align: center; margin-top: 50px;">
+  <h2>プロフィール編集</h2>
+
+  <%= form_with model: @user, url: profile_path, method: :patch do |f| %>
+    <div style="margin-bottom: 15px;">
+      <%= f.label :name, '名前' %><br>
+      <%= f.text_field :name %>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <%= f.label :email, 'メールアドレス' %><br>
+      <%= f.email_field :email %>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <%= f.label :password, 'パスワード（※変更する場合のみ入力）' %><br>
+      <%= f.password_field :password %>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <%= f.label :password_confirmation, 'パスワード確認' %><br>
+      <%= f.password_field :password_confirmation %>
+    </div>
+
+    <div>
+      <%= f.submit '更新する' %>
+    </div>
+  <% end %>
+</div>
