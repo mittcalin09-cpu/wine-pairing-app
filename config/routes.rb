@@ -6,8 +6,9 @@ Rails.application.routes.draw do
   post 'login', to: 'user_sessions#create'
   delete 'logout', to: 'user_sessions#destroy', as: :logout
   resource :profile, only: %i[edit update]
-
   resources :recipes, only: %i[index show]
+  resources :bookmarks, only: %i[create destroy]
+  resource :mypage, only: %i[show]
 
   get "static_pages/top"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

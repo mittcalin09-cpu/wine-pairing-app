@@ -14,4 +14,20 @@ class User < ApplicationRecord
   validates :password, confirmation: true, if: -> { new_record? || changes[:crypted_password] }
   # 確認用パスワード（password_confirmation）は必ず入力すること
   validates :password_confirmation, presence: true, if: -> { new_record? || changes[:crypted_password] }
+
+  has_many :bookmarks, dependent: :destroy
+  has_many :bookmark_recipes, through: :bookmarks, source: :recipe
+
+  # お気に入り追加、解除、確認のための便利メソッドも定義しておきます
+  def bookmark(recipe)
+    bookmark_recipes << recipe
+  end
+
+  def unbookmark(recipe)
+    bookmark_recipes.destroy(recipe)
+  end
+
+  def bookmark?(recipe)
+    bookmark_recipes.include?(recipe)
+  end
 end

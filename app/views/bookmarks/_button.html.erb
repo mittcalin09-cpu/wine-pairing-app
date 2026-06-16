@@ -1,0 +1,5 @@
+<% if current_user.bookmark?(recipe) %>
+  <%= link_to '★ お気に入り解除', bookmark_path(current_user.bookmarks.find_by(recipe_id: recipe.id)), data: { turbo_method: :delete }, style: "color: #ffc107; text-decoration: none; font-size: 18px; font-weight: bold;" %>
+<% else %>
+  <%= link_to '☆ お気に入り登録', bookmarks_path(recipe_id: recipe.id), data: { turbo_method: :post }, style: "color: #6c757d; text-decoration: none; font-size: 18px; font-weight: bold;" %>
+<% end %>
