@@ -18,6 +18,8 @@ class User < ApplicationRecord
   has_many :bookmarks, dependent: :destroy
   has_many :bookmark_recipes, through: :bookmarks, source: :recipe
 
+  enum role: { general: 0, admin: 1 }
+
   # お気に入り追加、解除、確認のための便利メソッドも定義しておきます
   def bookmark(recipe)
     bookmark_recipes << recipe
