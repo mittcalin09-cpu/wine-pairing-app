@@ -6,8 +6,9 @@ Rails.application.routes.draw do
   post 'login', to: 'user_sessions#create'
   delete 'logout', to: 'user_sessions#destroy', as: :logout
   resource :profile, only: %i[edit update]
- resources :recipes, only: %i[index show edit update]
-  resources :bookmarks, only: %i[create destroy]
+  resources :recipes, only: %i[index show edit update]
+  resources :bookmarks, only: %i[create]
+  delete 'bookmarks', to: 'bookmarks#destroy'
   resource :mypage, only: %i[show]
 
   get "static_pages/top"

@@ -1,27 +1,95 @@
-<div style="text-align: center; margin-top: 50px;">
-  <h1>ワインペアリングアプリ 🍷</h1>
+<div class="bg-white rounded-xl shadow-sm mb-8 p-8 text-center border-t-4 border-red-800">
+  <h1 class="text-3xl font-bold text-gray-800 mb-4">最高のワイン体験を、あなたの食卓に。</h1>
+  <p class="text-gray-600 mb-6">食材やワインの種類から、今日の一杯にぴったりのペアリングレシピを探しましょう。</p>
 
-  <div style="margin-top: 30px; padding: 20px; background-color: #f8f9fa; border-radius: 8px; display: inline-block;">
-    <h3>条件を選んでレシピを探す</h3>
-    <%= form_with url: recipes_path, method: :get do |f| %>
-      <div style="margin-bottom: 15px;">
-        <%= f.label :wine_type, 'ワインの種類:' %>
-        <%= f.select :wine_type, [['赤ワイン', 'red'], ['白ワイン', 'white'], ['ロゼワイン', 'rose']], include_blank: 'すべて' %>
+  <div class="max-w-2xl mx-auto bg-gray-50 p-6 rounded-lg border border-gray-200">
+    <%= form_with url: root_path, method: :get, local: true, class: "flex flex-col sm:flex-row gap-4 justify-center items-center" do |f| %>
+      <%= hidden_field_tag :wine_type, params[:wine_type] if params[:wine_type].present? %>
+      <%= hidden_field_tag :wine_body, params[:wine_body] if params[:wine_body].present? %>
+      
+      <div class="w-full sm:w-2/3">
+        <%= f.text_field :keyword, value: params[:keyword], placeholder: "「牛肉」「チーズ」など食材で検索", class: "w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent" %>
       </div>
-
-      <div style="margin-bottom: 15px;">
-        <%= f.label :wine_body, 'ワインの重さ:' %>
-        <%= f.select :wine_body, [['ライトボディ', 'light'], ['ミディアムボディ', 'medium'], ['フルボディ', 'full']], include_blank: 'すべて' %>
-      </div>
-
-      <div style="margin-bottom: 15px;">
-        <%= f.label :tag_id, 'メインの食材:' %>
-        <%= f.collection_select :tag_id, Tag.all, :id, :name, include_blank: 'すべて' %>
-      </div>
-
-      <div>
-        <%= f.submit '検索する' %>
+      <div class="w-full sm:w-1/3">
+        <%= f.submit 'レシピを検索', class: "w-full bg-red-800 text-white font-semibold px-6 py-2 rounded-md hover:bg-red-700 transition duration-300 cursor-pointer shadow-sm" %>
       </div>
     <% end %>
+
+    <div class="mt-6 text-center border-t border-gray-200 pt-4">
+      <p class="text-xs text-gray-500 mb-2 font-medium tracking-wider uppercase">① ワインの種類</p>
+      <div class="flex flex-wrap justify-center gap-2">
+        <%= link_to '🍷 赤ワイン', root_path(wine_type: 'red', wine_body: params[:wine_body], keyword: params[:keyword]), class: "text-sm px-4 py-1.5 rounded-full border border-red-800 font-medium transition duration-300 #{params[:wine_type] == 'red' ? 'bg-red-800 text-white shadow-sm' : 'text-red-800 hover:bg-red-800 hover:text-white'}" %>
+        <%= link_to '🥂 白ワイン', root_path(wine_type: 'white', wine_body: params[:wine_body], keyword: params[:keyword]), class: "text-sm px-4 py-1.5 rounded-full border border-amber-600 font-medium transition duration-300 #{params[:wine_type] == 'white' ? 'bg-amber-600 text-white shadow-sm' : 'text-amber-600 hover:bg-amber-600 hover:text-white'}" %>
+        <%= link_to '🌸 ロゼワイン', root_path(wine_type: 'rose', wine_body: params[:wine_body], keyword: params[:keyword]), class: "text-sm px-4 py-1.5 rounded-full border border-pink-500 font-medium transition duration-300 #{params[:wine_type] == 'rose' ? 'bg-pink-500 text-white shadow-sm' : 'text-pink-500 hover:bg-pink-500 hover:text-white'}" %>
+      </div>
+    </div>
+
+    <div class="mt-4 text-center">
+      <p class="text-xs text-gray-500 mb-2 font-medium tracking-wider uppercase">② ワインのボディ</p>
+      <div class="flex flex-wrap justify-center gap-2">
+        <%= link_to '🍃 ライト', root_path(wine_body: 'light', wine_type: params[:wine_type], keyword: params[:keyword]), class: "text-sm px-4 py-1.5 rounded-full border border-emerald-600 font-medium transition duration-300 #{params[:wine_body] == 'light' ? 'bg-emerald-600 text-white shadow-sm' : 'text-emerald-600 hover:bg-emerald-600 hover:text-white'}" %>
+        <%= link_to '🍷 ミディアム', root_path(wine_body: 'medium', wine_type: params[:wine_type], keyword: params[:keyword]), class: "text-sm px-4 py-1.5 rounded-full border border-yellow-700 font-medium transition duration-300 #{params[:wine_body] == 'medium' ? 'bg-yellow-700 text-white shadow-sm' : 'text-yellow-700 hover:bg-yellow-700 hover:text-white'}" %>
+        <%= link_to '🪵 フルボディ', root_path(wine_body: 'full', wine_type: params[:wine_type], keyword: params[:keyword]), class: "text-sm px-4 py-1.5 rounded-full border border-purple-900 font-medium transition duration-300 #{params[:wine_body] == 'full' ? 'bg-purple-900 text-white shadow-sm' : 'text-purple-900 hover:bg-purple-900 hover:text-white'}" %>
+      </div>
+    </div>
+
+    <% if params[:keyword].present? || params[:wine_type].present? || params[:wine_body].present? %>
+      <div class="mt-4 text-center">
+        <%= link_to '選択をすべてクリア', root_path, class: "text-xs text-gray-400 hover:text-gray-600 underline transition" %>
+      </div>
+    <% end %>
+
   </div>
+</div>
+
+<div>
+  <h2 class="text-2xl font-bold text-gray-800 mb-6 pl-2 border-l-4 border-red-800">レシピ一覧</h2>
+
+  <% if @recipes.present? %>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      
+      <% @recipes.each do |recipe| %>
+        <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-100 flex flex-col">
+          
+          <% if recipe.image.attached? %>
+            <%= image_tag recipe.image, class: "w-full h-48 object-cover" %>
+          <% else %>
+            <div class="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-400">
+              <span class="text-sm">画像がありません</span>
+            </div>
+          <% end %>
+
+          <div class="p-5 flex flex-col flex-grow">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-xl font-bold text-gray-800 line-clamp-1"><%= recipe.title %></h3>
+              
+              <% wine_color = case recipe.wine_type when 'red' then 'bg-red-100 text-red-800 border-red-200' when 'white' then 'bg-yellow-50 text-yellow-700 border-yellow-200' else 'bg-pink-100 text-pink-800 border-pink-200' end %>
+              <span class="text-xs font-semibold px-2 py-1 rounded-full border <%= wine_color %>">
+                <%= {'red' => '赤', 'white' => '白', 'rose' => 'ロゼ'}[recipe.wine_type] %>
+              </span>
+            </div>
+
+            <p class="text-sm text-gray-600 mb-4 line-clamp-2"><%= recipe.description %></p>
+
+            <div class="flex flex-wrap gap-1 mb-4">
+              <% recipe.tags.first(3).each do |tag| %>
+                <span class="inline-block bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">#<%= tag.name %></span>
+              <% end %>
+            </div>
+
+            <div class="mt-auto pt-4 border-t border-gray-100 text-center">
+              <%= link_to '詳細を見る', recipe_path(recipe), class: "inline-block text-red-800 font-semibold hover:text-red-600 transition" %>
+            </div>
+          </div>
+
+        </div>
+      <% end %>
+
+    </div>
+  <% else %>
+    <div class="bg-white rounded-lg p-8 text-center text-gray-500 shadow-sm border border-gray-100">
+      <p>条件に一致するレシピが見つかりませんでした。</p>
+      <p class="text-sm mt-2">別のキーワードで検索をお試しください。</p>
+    </div>
+  <% end %>
 </div>

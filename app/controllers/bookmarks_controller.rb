@@ -13,14 +13,13 @@ class BookmarksController < ApplicationController
   end
 
   def destroy
-    bookmark = current_user.bookmarks.find(params[:id])
-    recipe = bookmark.recipe
-    current_user.unbookmark(recipe)
+    @recipe = Recipe.find(params[:recipe_id])
+    current_user.unbookmark(@recipe)
     
     if request.referer&.include?('mypage')
       redirect_to mypage_path, status: :see_other
     else
-      redirect_to recipe_path(recipe), status: :see_other
+      redirect_to recipe_path(@recipe), status: :see_other
     end
   end
 end

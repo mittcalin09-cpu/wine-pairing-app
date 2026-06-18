@@ -1,24 +1,67 @@
-<div style="text-align: center; margin-top: 50px;">
-  <h2>マイページ</h2>
-  <p><%= current_user.name %> さんのお気に入りレシピ一覧</p>
-
-  <div style="margin-top: 30px;">
-    <% if @bookmark_recipes.present? %>
-      <ul style="list-style: none; padding: 0; max-width: 500px; margin: 0 auto; text-align: left;">
-        <% @bookmark_recipes.each do |recipe| %>
-          <li style="padding: 15px; background-color: #f8f9fa; border-radius: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
-            <%= link_to recipe.title, recipe_path(recipe), style: "font-size: 18px; font-weight: bold; color: #333; text-decoration: none;" %>
-            
-            <%= render 'bookmarks/button', recipe: recipe %>
-          </li>
-        <% end %>
-      </ul>
-    <% else %>
-      <p style="color: #6c757d;">お気に入り登録されたレシピはまだありません。</p>
-    <% end %>
+<div class="bg-white rounded-xl shadow-sm mb-8 p-6 border-l-4 border-red-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+  <div>
+    <h1 class="text-2xl font-bold text-gray-800"><%= current_user.name %> さんのマイページ</h1>
+    <p class="text-sm text-gray-500 mt-1">保存したお気に入りのペアリングレシピをコレクションしています。</p>
   </div>
-
-  <div style="margin-top: 40px;">
-    <%= link_to 'トップページに戻る', root_path %>
+  
+  <div class="bg-red-50 text-red-800 px-5 py-2 rounded-xl font-semibold text-center border border-red-100 min-w-[120px]">
+    <span class="text-xs block text-red-600 font-medium mb-0.5">お気に入りレシピ</span>
+    <span class="text-2xl font-bold"><%= @bookmark_recipes.count %></span> <span class="text-sm font-normal">件</span>
   </div>
+</div>
+
+<div>
+  <h2 class="text-xl font-bold text-gray-800 mb-6 pl-1 flex items-center gap-2">
+    <span>⭐</span> 保存したレシピ一覧
+  </h2>
+
+  <% if @bookmark_recipes.present? %>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      
+      <% @bookmark_recipes.each do |recipe| %>
+        <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-100 flex flex-col">
+          
+          <% if recipe.image.attached? %>
+            <%= image_tag recipe.image, class: "w-full h-40 object-cover" %>
+          <% else %>
+            <div class="w-full h-40 bg-gray-100 flex items-center justify-center text-gray-400">
+              <span class="text-xs">料理の画像がありません</span>
+            </div>
+          <% end %>
+
+          <div class="p-5 flex flex-col flex-grow">
+            <div class="flex justify-between items-start mb-2 gap-2">
+              <h3 class="font-bold text-gray-800 line-clamp-1 text-lg"><%= recipe.title %></h3>
+              
+              <% wine_color = case recipe.wine_type when 'red' then 'bg-red-50 text-red-800 border-red-100' when 'white' then 'bg-amber-50 text-amber-700 border-amber-100' else 'bg-pink-50 text-pink-800 border-pink-100' end %>
+              <span class="text-xs font-semibold px-2 py-0.5 rounded-full border shrink-0 <%= wine_color %>">
+                <%= {'red' => '赤', 'white' => '白', 'rose' => 'ロゼ'}[recipe.wine_type] %>
+              </span>
+            </div>
+
+            <p class="text-sm text-gray-500 mb-4 line-clamp-2"><%= recipe.description %></p>
+
+            <div class="mt-auto pt-4 border-t border-gray-100 flex justify-between items-center">
+              <%= link_to '詳細を見る', recipe_path(recipe), class: "text-sm text-red-800 font-semibold hover:text-red-600 transition underline" %>
+              
+              <%= link_to bookmarks_path(recipe_id: recipe.id), data: { turbo_method: :delete }, class: "text-xs text-gray-400 hover:text-red-600 transition flex items-center gap-1 bg-gray-50 hover:bg-red-50 px-2.5 py-1 rounded-md border border-gray-200 hover:border-red-200" do %>
+                <span>★</span> 解除する
+              <% end %>
+            </div>
+          </div>
+
+        </div>
+      <% end %>
+
+    </div>
+  <% else %>
+    <div class="bg-white rounded-2xl p-12 text-center text-gray-500 shadow-sm border border-gray-100 max-w-2xl mx-auto my-6">
+      <div class="text-5xl block mb-4">🍷</div>
+      <h3 class="font-bold text-gray-700 text-lg mb-2">お気に入りのレシピはまだありません</h3>
+      <p class="text-sm text-gray-400 max-w-md mx-auto mb-8">
+        トップページから、気になるワインの種類や今夜の食材を選んで、ぴったりのペアリングレシピを探してみましょう！
+      </p>
+      <%= link_to 'レシピを探しに行く', root_path, class: "inline-block bg-red-800 text-white font-semibold px-6 py-3 rounded-xl hover:bg-red-700 transition shadow-sm" %>
+    </div>
+  <% end %>
 </div>
