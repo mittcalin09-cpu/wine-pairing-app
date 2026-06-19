@@ -22,7 +22,10 @@
         <% if logged_in? %>
           <%= link_to 'マイページ', mypage_path, class: "hover:text-red-200 transition duration-300" %>
           <span class="opacity-50">|</span>
-          <%= link_to current_user.name, edit_profile_path, class: "hover:text-red-200 transition duration-300" %>
+          
+          <%# 修正箇所: リンク(link_to)を外し、名前の表示(span)のみに変更しました %>
+          <span><%= current_user.name %></span>
+          
           <span class="opacity-50">|</span>
           <%= link_to 'ログアウト', logout_path, data: { turbo_method: :delete }, class: "hover:text-red-200 transition duration-300" %>
         <% else %>
