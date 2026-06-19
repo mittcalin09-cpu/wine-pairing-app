@@ -3,9 +3,12 @@ class StaticPagesController < ApplicationController
     # まず全レシピをベースにする
     @recipes = Recipe.all
 
-    # ① 食材（キーワード）での検索
+    # ① 食材（キーワード）での検索が実行された場合
     if params[:keyword].present?
-      @recipes = @recipes.where('title LIKE ? OR description LIKE ?', "%#{params[:keyword]}%", "%#{params[:keyword]}%")
+      keyword = "%#{params[:keyword]}%"
+      @recipes = @recipes.left_outer_joins(:tags)
+                         .where('recipes.title LIKE ? OR recipes.description LIKE ? OR tags.name LIKE ?', keyword, keyword, keyword)
+                         .distinct
     end
 
     # ② ワインの種類での絞り込み
@@ -13,7 +16,7 @@ class StaticPagesController < ApplicationController
       @recipes = @recipes.where(wine_type: params[:wine_type])
     end
 
-    # ③ 【追加】ワインのボディ（口当たり）での絞り込み
+    # ③ ワインのボディ（口当たり）での絞り込み
     if params[:wine_body].present?
       @recipes = @recipes.where(wine_body: params[:wine_body])
     end

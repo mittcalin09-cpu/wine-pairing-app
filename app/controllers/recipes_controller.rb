@@ -1,7 +1,7 @@
 class RecipesController < ApplicationController
 
   before_action :require_admin, only: %i[edit update]
-  
+
   def index
     @recipes = Recipe.all
 
@@ -39,6 +39,6 @@ class RecipesController < ApplicationController
   private
 
   def recipe_params
-    params.require(:recipe).permit(:title, :description, :wine_type, :wine_body, :image)
+    params.require(:recipe).permit(:title, :description, :image, :wine_type, :wine_body, :tag_names)
   end
 end

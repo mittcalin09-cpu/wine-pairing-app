@@ -24,6 +24,12 @@
       <%= f.text_area :description, rows: 5, class: "w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-800 focus:border-transparent transition bg-gray-50 focus:bg-white leading-relaxed" %>
     </div>
 
+    <div>
+      <%= f.label :tag_names, '🏷️ タグ（カンマ区切り）', class: "block font-bold text-gray-700 mb-2" %>
+      <%= f.text_field :tag_names, class: "w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-800 focus:border-transparent transition bg-gray-50 focus:bg-white", placeholder: "牛肉, チーズ, トマト" %>
+      <p class="text-xs text-gray-500 mt-1 pl-1">※複数のタグをつける場合は、カンマ（ , ）で区切って入力してください</p>
+    </div>
+
     <div class="text-center pt-6">
       <%= f.submit 'レシピを更新する', class: "w-full sm:w-auto px-10 py-3.5 bg-gray-800 text-white font-bold rounded-xl hover:bg-gray-700 transition shadow-sm cursor-pointer text-lg" %>
     </div>
